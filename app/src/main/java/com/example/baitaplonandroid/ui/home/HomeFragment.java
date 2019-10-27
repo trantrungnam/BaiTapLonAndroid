@@ -29,6 +29,8 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
+
+        // Get values from model view that ensure data not be lost when we rotate
         homeViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -36,9 +38,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // Set List view show data.
         listView = (ListView) root.findViewById(R.id.ListViewHome);
         CustomAdapter customAdapter = new CustomAdapter(getContext(), items);
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(root.getContext(), android.R.layout.simple_list_item_1, items);
         listView.setAdapter(customAdapter);
         return root;
     }

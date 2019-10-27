@@ -2,17 +2,25 @@ package com.example.baitaplonandroid.ui.Models;
 
 import androidx.annotation.NonNull;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category extends BaseModel{
     private int id;
     private String name;
     private String description;
-    private int[] foods;
 
-    public Category (int id, String name, String description, int[] foods) {
+    public Category(int id, String name, String description, String createAt, String updateAt, boolean isDeleted) {
+        super(createAt, updateAt, isDeleted);
         this.id = id;
         this.name = name;
         this.description = name;
-        this.foods = foods;
+    }
+
+    public Category(int id) {
+        this.id = id;
+    }
+
+    public Category() {
     }
 
     public int getId() {
@@ -39,17 +47,12 @@ public class Category {
         this.description = description;
     }
 
-    public int[] getFoods() {
-        return foods;
-    }
-
-    public void setFoods(int[] foods) {
-        this.foods = foods;
-    }
-
-    @NonNull
     @Override
     public String toString() {
-        return super.toString();
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
