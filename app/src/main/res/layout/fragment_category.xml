@@ -25,5 +25,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ></ListView>
-
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="bottom">
+    <Button
+        android:id="@+id/btnAddCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm thư mục"
+        android:textSize="28dp"
+        android:gravity="bottom"
+        android:textStyle="bold"
+        />
+    </RelativeLayout>
 </LinearLayout>
