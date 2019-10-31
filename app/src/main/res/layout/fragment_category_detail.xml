@@ -29,6 +29,11 @@
         android:text="Trở về"
         />
     <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cập nhật"/>
+    <Button
         android:id="@+id/btnXoa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -35,6 +35,19 @@
         android:label="Category"
         tools:layout="@layout/fragment_category" />
 
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.baitaplonandroid.ui.User.User_Login"
+        android:label="@string/menu_login"
+        tools:layout="@layout/fragment_send" />
+
+    <fragment
+        android:id="@+id/nav_management"
+        android:name="com.example.baitaplonandroid.ui.Admin_Permission.Admin_Home"
+        android:label="@string/menu_login"
+        tools:layout="@layout/fragment_admin__home" />
+
+
 
     <fragment
         android:id="@+id/nav_share"
@@ -47,4 +60,6 @@
         android:name="com.example.baitaplonandroid.ui.send.SendFragment"
         android:label="@string/menu_send"
         tools:layout="@layout/fragment_send" />
+
+
 </navigation>

@@ -11,6 +11,11 @@ public class BaseModel {
         this.isDelete = isDelete;
     }
 
+    public BaseModel(boolean isDelete)
+    {
+        this.isDelete = isDelete;
+    }
+
     public BaseModel() {
     }
 

@@ -1,6 +1,7 @@
 package com.example.baitaplonandroid.ui.category;
 
 
+import android.location.Address;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,7 +26,7 @@ public class CategoryDetailFragment extends Fragment {
 
     private TextView txtName;
     private TextView txtDescription;
-    private Button btnBack, btnXoa;
+    private Button btnBack, btnXoa, btnUpdate;
     private FragmentManager manager;
     private FragmentTransaction transaction;
     private CategoryHelper categoryHelper;
@@ -44,8 +45,8 @@ public class CategoryDetailFragment extends Fragment {
         // GET VALUE FROM BUNDLE
         idCategory = getArguments().getInt("id");
         Toast.makeText(getContext(), idCategory + "", Toast.LENGTH_SHORT).show();
-        String name = getArguments().getString("name");
-        String description = getArguments().getString("description");
+        final String name = getArguments().getString("name");
+        final String description = getArguments().getString("description");
 
         //INITIAL CATEGORY HELPER DATABASE.
         categoryHelper = new CategoryHelper(getContext());
@@ -86,6 +87,23 @@ public class CategoryDetailFragment extends Fragment {
 
                 //ADD CATEGORY FRAGMENT UI.
                 transaction.replace(R.id.nav_host_fragment, categoryFragment);
+                transaction.commit();
+            }
+        });
+
+        //HANDLE BTN UPDATE
+        btnUpdate = view.findViewById(R.id.btnUpdate);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                Category category = categoryHelper.getCategoryById(idCategory);
+                bundle.putInt("id", idCategory);
+                bundle.putString("name", category.getName());
+                bundle.putString("description", category.getDescription());
+                CategoryUpdateFragment categoryUpdateFragment = new CategoryUpdateFragment();
+                categoryUpdateFragment.setArguments(bundle);
+                transaction.replace(R.id.nav_host_fragment, categoryUpdateFragment);
                 transaction.commit();
             }
         });
