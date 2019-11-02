@@ -50,7 +50,7 @@ public class CustomAdapterUser extends BaseAdapter {
         TextView txtUserName = view.findViewById(R.id.txtUserName);
         txtUserName.setText(users.get(i).getUsername());
         TextView txtIsAdmin = view.findViewById(R.id.txtIsAdmin);
-        txtIsAdmin.setText(users.get(i).getRole() == "NV" ? "Nhân viên" : "Admin");
+        txtIsAdmin.setText(users.get(i).getRole().equals("NV") ? "Nhân viên" : "Admin");
         return view;
     }
 }

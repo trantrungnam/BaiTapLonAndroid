@@ -1,6 +1,7 @@
 package com.example.baitaplonandroid.ui.User;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ public class User_Login extends Fragment {
     private FragmentManager manager;
     private FragmentTransaction transaction;
     private UserHelper userHelper;
+    private SharedPreferences sharedPreferences;
 
     public User_Login() {
 
@@ -61,6 +63,13 @@ public class User_Login extends Fragment {
                 String matkhau = edtMatKhau.getText().toString();
                 User user = userHelper.loginUser(taikhoan, matkhau);
                 if (user != null) {
+                    sharedPreferences = getActivity().getSharedPreferences("restaurant", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor  = sharedPreferences.edit();
+                    editor.putInt("id", user.getId());
+                    editor.putString("username", user.getUsername());
+                    editor.putString("role", user.getRole());
+                    editor.commit();
+
                     HomeFragment homeFragment = new HomeFragment();
                     Bundle bundle = new Bundle();
                     bundle.putString("username" , taikhoan);

@@ -127,7 +127,23 @@ public class UserHelper extends SQLiteOpenHelper {
         String password = md5(user.getUsername() + user.getPassword());
         values.put(PASSWORD, password);
         values.put(UPDATEAT, getDateTime());
+        values.put(ROLE, user.getRole());
         return db.update(TABLE_NAME, values, ID + "=?", new String[]{String.valueOf(user.getId())});
+    }
+
+    public int UpdateRole(User user) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ROLE, user.getRole());
+        return db.update(TABLE_NAME, contentValues, ID + "= ?", new String[]{String.valueOf(user.getId())});
+    }
+
+    public int UpdatePassword(User user) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        String password = md5(user.getUsername() + user.getPassword());
+        contentValues.put(PASSWORD, password);
+        return db.update(TABLE_NAME, contentValues, ID + "= ?", new String[]{String.valueOf(user.getId())});
     }
 
     public List<User> getAllUser() {

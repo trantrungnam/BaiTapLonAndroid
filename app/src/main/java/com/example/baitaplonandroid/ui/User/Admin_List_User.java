@@ -10,7 +10,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 
 import com.example.baitaplonandroid.R;
 import com.example.baitaplonandroid.ui.Models.User;
@@ -55,6 +58,21 @@ public class Admin_List_User extends Fragment {
         CustomAdapterUser adapterUser = new CustomAdapterUser(getContext(), users);
         listViewUser = view.findViewById(R.id.listUser);
         listViewUser.setAdapter(adapterUser);
+
+        listViewUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                User user = users.get(i);
+                Admin_Edit_User edit_user  = new Admin_Edit_User();
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", user.getId());
+                bundle.putString("username", user.getUsername());
+                bundle.putString("role", user.getRole());
+                edit_user.setArguments(bundle);
+                transaction.replace(R.id.nav_host_fragment, edit_user);
+                transaction.commit();
+            }
+        });
 
         return view;
     }

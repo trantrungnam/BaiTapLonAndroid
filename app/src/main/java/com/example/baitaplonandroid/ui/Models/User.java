@@ -14,6 +14,11 @@ public class User extends BaseModel{
         this.role = role;
     }
 
+    public User( int id, String password) {
+        Id = id;
+        this.password = password;
+    }
+
     public User(int id, String username, String password, String role) {
         Id = id;
         this.username = username;
@@ -33,8 +38,14 @@ public class User extends BaseModel{
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.role = role;
     }
+
+    public User(int id, String username, String password) {
+        Id = id;
+        this.username = username;
+        this.password = password;
+    }
+
 
     public User() {
     }
