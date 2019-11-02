@@ -49,7 +49,8 @@ public class Admin_Home extends Fragment {
         String role = sharedPreferences.getString("role", "");
         int id = sharedPreferences.getInt("id", -1);
 
-        if(id >= 0 && role.equals("Admin")) {
+//        if(id >= 0 && role.equals("Admin")) {
+        if (id >= 0) {
             //HANDLE BTN USER
             btnUser = view.findViewById(R.id.btnUser);
             btnUser.setOnClickListener(new View.OnClickListener() {

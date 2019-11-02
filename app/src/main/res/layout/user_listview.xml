@@ -3,7 +3,8 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:weightSum="5"
     android:layout_margin="10dp"
-    android:layout_height="80dp">
+    android:layout_height="80dp"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/txtId"

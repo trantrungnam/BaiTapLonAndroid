@@ -1,12 +1,20 @@
 package com.example.baitaplonandroid;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.baitaplonandroid.ui.User.User_Detail;
+import com.example.baitaplonandroid.ui.User.User_Login;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -20,13 +28,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private LinearLayout linearLayout;
+    private ImageView imageView;
+    private FragmentManager manager;
+    private FragmentTransaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +56,65 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
-        //LINEAR LAYOUT
-            linearLayout = findViewById(R.id.linearHeader);
-        linearLayout.setOnClickListener(new View.OnClickListener() {
+        TextView txtUserName = findViewById(R.id.edtHeaderUserName);
+        View headerView = navigationView.getHeaderView(0);
+
+        // CONFIG FRAGMENT
+
+        manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+
+
+        // HANDLE IMAGE HEADER //
+        imageView = headerView.findViewById(R.id.buttonView);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Get here", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Click here", Toast.LENGTH_SHORT)
+                        .show();
+                SharedPreferences sharedPreferences = getSharedPreferences(
+                        "restaurant",
+                        Context.MODE_PRIVATE);
+                int userId = sharedPreferences.getInt("id", -1);
+                String username = sharedPreferences.getString("username", "");
+
+                if ((userId == -1 && username.equals(""))) {
+
+                    transaction = manager.beginTransaction();
+                    User_Login user_login = new User_Login();
+                    Toast.makeText(MainActivity.this, "Show", Toast.LENGTH_SHORT).show();
+                    transaction.replace(R.id.nav_host_fragment, user_login);
+                }
+                else {
+                    transaction = manager.beginTransaction();
+                    sharedPreferences.getString("username", "");
+                    sharedPreferences.getInt("id", -1);
+                    User_Detail userDetail = new User_Detail();
+                    transaction.replace(R.id.nav_host_fragment, userDetail);
+                    Toast.makeText(MainActivity.this, "Connected Success", Toast.LENGTH_SHORT).show();
+                }
+                transaction.commit();
             }
         });
 
+
+        //
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send, R.id.nav_category, R.id.nav_login, R.id.nav_management)
+                R.id.nav_tools, R.id.nav_share, R.id.nav_send, R.id.nav_category,
+                R.id.nav_login, R.id.nav_management)
                 .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavController navController = Navigation.findNavController(this,
+                R.id.nav_host_fragment);
+
+
+        NavigationUI.setupActionBarWithNavController(this, navController,
+                mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
@@ -75,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this,
+                R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }

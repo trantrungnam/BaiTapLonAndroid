@@ -4,9 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     android:background="@color/white"
-    tools:context=".ui.User.Admin_Edit_User">
+    tools:context=".ui.User.Admin_Update_User">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Thông tin chi tiết:"
+        android:textSize="28dp"
+        android:textStyle="bold" />
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,11 +26,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:text="Tài khoản" />
 
-        <EditText
+        <TextView
             android:id="@+id/edtUserName"
             android:layout_width="0dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_weight="2" />
     </LinearLayout>
@@ -37,55 +49,50 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:text="Mật khẩu" />
 
         <EditText
             android:id="@+id/edtPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:layout_weight="2" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Admin" />
-
-        <CheckBox
-            android:id="@+id/cbIsAdmin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        >
+        android:weightSum="2">
 
         <Button
-            android:layout_weight="1"
             android:id="@+id/btnSave"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Lưu"/>
+            android:layout_weight="1"
+            android:text="Lưu" />
 
         <Button
-            android:layout_weight="1"
             android:id="@+id/btnHuy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Trờ về"/>
+            android:layout_weight="1"
+            android:text="Trờ về" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnDangXuat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:text="Đăng xuất"></Button>
+    </LinearLayout>
 
 </LinearLayout>
