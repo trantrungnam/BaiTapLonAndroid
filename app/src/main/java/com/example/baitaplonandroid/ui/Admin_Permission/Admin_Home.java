@@ -15,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.baitaplonandroid.R;
+import com.example.baitaplonandroid.ui.Food.Food_Home_Admin;
 import com.example.baitaplonandroid.ui.User.Admin_List_User;
 import com.example.baitaplonandroid.ui.User.User_Login;
+import com.example.baitaplonandroid.ui.category.CategoryFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,20 +44,20 @@ public class Admin_Home extends Fragment {
 
         // CONFIG MANAGER
         manager = getFragmentManager();
-        transaction = manager.beginTransaction();
 
         sharedPreferences = this.getActivity().getSharedPreferences("restaurant", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "");
         String role = sharedPreferences.getString("role", "");
         int id = sharedPreferences.getInt("id", -1);
 
-//        if(id >= 0 && role.equals("Admin")) {
-        if (id >= 0) {
+        if(id >= 0 && role.equals("Admin")) {
+//        if (id >= 0) {
             //HANDLE BTN USER
             btnUser = view.findViewById(R.id.btnUser);
             btnUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    transaction = manager.beginTransaction();
                     Admin_List_User admin_list_user = new Admin_List_User();
                     transaction.replace(R.id.nav_host_fragment, admin_list_user);
                     transaction.commit();
@@ -68,7 +70,10 @@ public class Admin_Home extends Fragment {
             btnMonAn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    transaction = manager.beginTransaction();
+                    Food_Home_Admin food_home_admin = new Food_Home_Admin();
+                    transaction.replace(R.id.nav_host_fragment, food_home_admin);
+                    transaction.commit();
                 }
             });
 
@@ -77,7 +82,10 @@ public class Admin_Home extends Fragment {
             btnCategory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    transaction = manager.beginTransaction();
+                    CategoryFragment categoryFragment  = new CategoryFragment();
+                    transaction.replace(R.id.nav_host_fragment, categoryFragment);
+                    transaction.commit();
                 }
             });
 
@@ -91,6 +99,7 @@ public class Admin_Home extends Fragment {
             });
         } else {
             User_Login user_login = new User_Login();
+            transaction = manager.beginTransaction();
             transaction.replace(R.id.nav_host_fragment, user_login);
             transaction.commit();
         }

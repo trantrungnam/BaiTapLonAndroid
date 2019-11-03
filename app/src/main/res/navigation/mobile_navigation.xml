@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.baitaplonandroid.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:id="@+id/nav_food"
+        android:name="com.example.baitaplonandroid.ui.Food.Food_Home"
+        android:label="@string/menu_food"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment

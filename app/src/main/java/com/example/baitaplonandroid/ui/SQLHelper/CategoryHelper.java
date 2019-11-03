@@ -51,6 +51,8 @@ public class CategoryHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sqlQuery);
         UserHelper userHelper = new UserHelper(this.context);
         userHelper.onCreate(sqLiteDatabase);
+        FoodHelper foodHelper = new FoodHelper(this.context);
+        foodHelper.onCreate(sqLiteDatabase);
         Toast.makeText(context, "Create successfully", Toast.LENGTH_SHORT).show();
 
     }

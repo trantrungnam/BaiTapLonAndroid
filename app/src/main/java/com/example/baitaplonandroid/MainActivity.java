@@ -84,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     User_Login user_login = new User_Login();
                     Toast.makeText(MainActivity.this, "Show", Toast.LENGTH_SHORT).show();
                     transaction.replace(R.id.nav_host_fragment, user_login);
-                }
-                else {
+                } else {
                     transaction = manager.beginTransaction();
                     sharedPreferences.getString("username", "");
                     sharedPreferences.getInt("id", -1);
@@ -104,9 +103,7 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send, R.id.nav_category,
-                R.id.nav_login, R.id.nav_management)
+                R.id.nav_home, R.id.nav_food, R.id.nav_share, R.id.nav_send, R.id.nav_category, R.id.nav_management)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this,

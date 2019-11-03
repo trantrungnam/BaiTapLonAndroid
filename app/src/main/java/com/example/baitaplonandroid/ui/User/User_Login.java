@@ -90,6 +90,10 @@ public class User_Login extends Fragment {
             public void onClick(View view) {
                 String taikhoan = edtTaiKhoan.getText().toString();
                 String matkhau = edtMatKhau.getText().toString();
+                if (taikhoan.isEmpty() || matkhau.isEmpty()){
+                    Toast.makeText(getContext(), "Vui lòng nhập tài khoản và mật khẩu", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 User user = userHelper.getUserInfoByUsername(taikhoan);
                 if (user != null) {
                     Toast.makeText(getContext(), "Tài khoản đã tồn tại trong hệ thống", Toast.LENGTH_SHORT).show();
@@ -98,6 +102,14 @@ public class User_Login extends Fragment {
                     User userInfoAfterRegister = userHelper.getUserInfoByUsername(taikhoan);
                     if (userInfoAfterRegister != null) {
                         // LOGIN SUCCESS
+                        User userAfterSearch = userHelper.getUserInfoByUsername(taikhoan);
+                        sharedPreferences = getActivity().getSharedPreferences("restaurant", 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt("id", userAfterSearch.getId());
+                        editor.putString("username", userAfterSearch.getUsername());
+                        editor.putString("role", userAfterSearch.getRole());
+                        editor.commit();
+
                         HomeFragment homeFragment = new HomeFragment();
                         transaction.replace(R.id.nav_host_fragment, homeFragment);
                         transaction.commit();

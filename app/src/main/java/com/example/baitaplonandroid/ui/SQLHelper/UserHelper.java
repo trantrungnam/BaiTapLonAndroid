@@ -54,24 +54,16 @@ public class UserHelper extends SQLiteOpenHelper {
                 UPDATEAT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                 ISDELETE + " INTEGER DEFAULT 0 " +
                 ")";
+
         sqLiteDatabase.execSQL(sqlQuery);
         Toast.makeText(context, "Create successfully", Toast.LENGTH_SHORT).show();
 
+        String password = md5("admin" + "admin");
+        String sqlQueryAddAdminDefault = "INSERT INTO "+ TABLE_NAME + "(username, password, role) VALUES ( " +
+                "'admin','" +  password + "', 'Admin' )";
+        sqLiteDatabase.execSQL(sqlQueryAddAdminDefault);
     }
 
-//    @Override
-//    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-//        String sqlQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
-//                ID + "INT  INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL," +
-//                NAME + "TEXT" +
-//                DESCRIPTION + "TEXT," +
-//                CREATEAT + "DATETIME," +
-//                UPDATEAT + "DATETIME," +
-//                ISDELETE + "INTEGER" +
-//                ")";
-//        sqLiteDatabase.execSQL(sqlQuery);
-//        Toast.makeText(context, "Create successfully", Toast.LENGTH_SHORT).show();
-//    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
