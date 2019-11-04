@@ -62,7 +62,7 @@ public class Food_Item_Update_Admin_Pure extends Fragment {
     private List<Category> categoriesNotSelected, categoriesSelected;
     private FoodHelper foodHelper;
     private String Document_img1 = "";
-    private String imageURL = "/storage/emulated/0/Pictures/1572793569605.jpg";
+    private String imageURL = "";
 
 
     public Food_Item_Update_Admin_Pure() {
@@ -109,10 +109,13 @@ public class Food_Item_Update_Admin_Pure extends Fragment {
         // IMAGE BUTTON
 
         imgBtnHinhAnh = view.findViewById(R.id.imgBtnHinhAnh);
-        Bitmap thumbnail = (BitmapFactory.decodeFile(imageValue));
-        thumbnail = getResizedBitmap(thumbnail, 400);
-        imgBtnHinhAnh.setImageBitmap(thumbnail);
-        BitMapToString(thumbnail);
+        try {
+            Bitmap thumbnail = (BitmapFactory.decodeFile(imageValue));
+            thumbnail = getResizedBitmap(thumbnail, 400);
+            imgBtnHinhAnh.setImageBitmap(thumbnail);
+        } catch (Exception e) {
+            Log.d("myapp", "onCreateView: " + e);
+        }
 
 
         // HANDLE UPLOAD IMAGE
@@ -133,17 +136,37 @@ public class Food_Item_Update_Admin_Pure extends Fragment {
         CategoryHelper categoryHelper = new CategoryHelper(getActivity());
 
         foodHelper = new FoodHelper(getActivity());
+
+        // HANDLE CATEGORIES SELECT IN HERE
+
         categoriesNotSelected = categoryHelper.getAllCategory();
 
-        for (int i = 0; i <= categoriesNotSelected.size(); i++) {
-            for (int idItem : categoriesId
-            ) {
+        List<Integer> listPosition = new ArrayList<Integer>();
+
+        for (int idItem : categoriesId
+        ) {
+            for (int i = 0; i < categoriesNotSelected.size(); i++) {
+
                 if (categoriesNotSelected.get(i).getId() == idItem) {
                     categoriesSelected.add(categoriesNotSelected.get(i));
-                    categoriesNotSelected.remove(i);
+                    listPosition.add(i);
                 }
             }
         }
+
+        List<Category> temporaryCategoryList = new ArrayList<Category>();
+
+        for (int i = 0 ; i < categoriesNotSelected.size(); i++) {
+            boolean isDuplicate = false;
+            for (int index: listPosition) {
+                if (i == index) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+            if(isDuplicate == false) temporaryCategoryList.add(categoriesNotSelected.get(i));
+        }
+        categoriesNotSelected = temporaryCategoryList;
 
         listViewCategories = view.findViewById(R.id.listViewCategories);
         CategoryCustomAdapter categoryCustomAdapter = new CategoryCustomAdapter(getContext(), categoriesNotSelected);
@@ -164,6 +187,9 @@ public class Food_Item_Update_Admin_Pure extends Fragment {
             }
         });
 
+        listViewCategoriesSelect = view.findViewById(R.id.listViewCategoriesSelect);
+        CategoryCustomAdapter categoryCustomAdapterSelect = new CategoryCustomAdapter(getContext(), categoriesSelected);
+        listViewCategoriesSelect.setAdapter(categoryCustomAdapterSelect);
         listViewCategoriesSelect.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -189,11 +215,10 @@ public class Food_Item_Update_Admin_Pure extends Fragment {
                 String description = edtDescription.getText().toString();
 
                 String unit = edtUnit.getText().toString();
-                String uriImage = imageURL;
-//                String categories = categoriesSelected;
+                String uriImage = imageURL.equals("") ? imageValue : imageURL;
 
                 List<Integer> categoriesId = new ArrayList<Integer>();
-                for (Category item: categoriesSelected
+                for (Category item : categoriesSelected
                 ) {
                     categoriesId.add(item.getId());
                 }
@@ -205,8 +230,7 @@ public class Food_Item_Update_Admin_Pure extends Fragment {
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Giá không phù hợp", Toast.LENGTH_SHORT).show();
                 }
-                List<Integer> categoriesIDs = new ArrayList<Integer>();
-                Food food = new Food(name, description, price, unit, uriImage, categoriesId );
+                Food food = new Food(id, name, description, price, unit, uriImage, categoriesId);
                 foodHelper.Update(food);
 
                 transaction = manager.beginTransaction();
@@ -250,8 +274,8 @@ public class Food_Item_Update_Admin_Pure extends Fragment {
 //                Log.d("myapp", picturePath + "");
 //                edtDescription.setText(picturePath);
             c.close();
-//                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-            Bitmap thumbnail = (BitmapFactory.decodeFile("/storage/emulated/0/Pictures/1572793569605.jpg"));
+            Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+//            Bitmap thumbnail = (BitmapFactory.decodeFile("/storage/emulated/0/Pictures/1572793569605.jpg"));
             thumbnail = getResizedBitmap(thumbnail, 400);
             Log.w("path of image from gallery......******************.........", picturePath + "");
             imgBtnHinhAnh.setImageBitmap(thumbnail);

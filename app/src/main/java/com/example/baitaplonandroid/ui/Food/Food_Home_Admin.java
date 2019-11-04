@@ -81,7 +81,7 @@ public class Food_Home_Admin extends Fragment {
                 Food food = foods.get(i);
                 bundle.putInt("id", food.getId());
                 bundle.putString("name", food.getName());
-                bundle.putString("description", food.getName());
+                bundle.putString("description", food.getDescription());
                 bundle.putString("unit", food.getUnit());
                 bundle.putString("image", food.getPicture());
                 bundle.putString("price", food.getPrice().toString());

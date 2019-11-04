@@ -162,7 +162,16 @@ public class FoodHelper extends SQLiteOpenHelper {
 
                         for (String category : categoryIds
                         ) {
-                            categoryWithInt.add(Integer.parseInt(category));
+                            if (category.startsWith("["))
+                            {
+                                category = category.replace('[',' ');
+                            }
+                            if (category.endsWith("]"))
+                            {
+                                category = category.replace(']',' ');
+                            }
+
+                            categoryWithInt.add(Integer.parseInt(category.trim()));
                         }
                     } catch (Exception e) {
                         Toast.makeText(context, "Category no choose", Toast.LENGTH_SHORT).show();

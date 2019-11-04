@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,9 +68,14 @@ public class Food_Item_Detail_Admin extends Fragment {
         // IMAGE VIEW
         img_food = view.findViewById(R.id.img_food);
         img_food = view.findViewById(R.id.img_food);
-        Bitmap thumbnail = (BitmapFactory.decodeFile(imageValue));
-        thumbnail = getResizedBitmap(thumbnail, 400);
-        img_food.setImageBitmap(thumbnail);
+        try {
+
+            Bitmap thumbnail = (BitmapFactory.decodeFile(imageValue));
+            thumbnail = getResizedBitmap(thumbnail, 400);
+            img_food.setImageBitmap(thumbnail);
+        } catch ( Exception e ) {
+            Log.d("myapp", "onCreateView: " + e);
+        }
 
 
         toolbar = view.findViewById(R.id.toolbar);
@@ -152,5 +158,4 @@ public class Food_Item_Detail_Admin extends Fragment {
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
-
 }

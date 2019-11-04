@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,12 +62,15 @@ public class Food_Item_For_ListView_Admin extends BaseAdapter {
         view = layoutInflater.inflate(R.layout.fragment_food__item__for__list_view__admin, null);
         ImageView imageButton = view.findViewById(R.id.img_food);
 
-
-        Bitmap thumbnail = (BitmapFactory.decodeFile(foodList.get(i).getPicture()));
-        thumbnail = getResizedBitmap(thumbnail, 400);
-        imageButton.setImageBitmap(thumbnail);
-        BitMapToString(thumbnail);
+        try {
+            Bitmap thumbnail = (BitmapFactory.decodeFile(foodList.get(i).getPicture()));
+            thumbnail = getResizedBitmap(thumbnail, 400);
+            imageButton.setImageBitmap(thumbnail);
+            BitMapToString(thumbnail);
 //        imageButton.setImageResource();
+        } catch (Exception e) {
+            Log.d("myapp", "getView: " + e);
+        }
 
         TextView txt_food_name = view.findViewById(R.id.food_name);
         txt_food_name.setText(foodList.get(i).getName());

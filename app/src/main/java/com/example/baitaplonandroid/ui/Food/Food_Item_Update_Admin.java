@@ -118,36 +118,12 @@ public class Food_Item_Update_Admin extends Fragment {
         ActivityCompat.requestPermissions(getActivity(),
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
 
-//        if (ContextCompat.checkSelfPermission(getContext(),
-//                Manifest.permission.READ_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//
-//            // Permission is not granted
-//            // Should we show an explanation?
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-//                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
-//                // Show an explanation to the user *asynchronously* -- don't block
-//                // this thread waiting for the user's response! After the user
-//                // sees the explanation, try again to request the permission.
-//            } else {
-//                // No explanation needed; request the permission
-//                ActivityCompat.requestPermissions(getActivity(),
-//                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 200);
-//                ActivityCompat.requestPermissions(getActivity(),
-//                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
-//
-//                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-//                // app-defined int constant. The callback method gets the
-//                // result of the request.
-//            }
-//        } else {
-//
-//        }
-
-
         CategoryHelper categoryHelper = new CategoryHelper(getActivity());
 
         foodHelper = new FoodHelper(getActivity());
+
+        // Need to get gallery id from parrent fragment
+
         categoriesNotSelected = categoryHelper.getAllCategory();
         listViewCategories = view.findViewById(R.id.listViewCategories);
         CategoryCustomAdapter categoryCustomAdapter = new CategoryCustomAdapter(getContext(), categoriesNotSelected);
