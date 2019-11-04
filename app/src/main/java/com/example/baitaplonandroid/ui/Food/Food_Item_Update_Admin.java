@@ -97,10 +97,10 @@ public class Food_Item_Update_Admin extends Fragment {
         // IMAGE BUTTON
 
         imgBtnHinhAnh = view.findViewById(R.id.imgBtnHinhAnh);
-        Bitmap thumbnail = (BitmapFactory.decodeFile("/storage/emulated/0/Pictures/1572793569605.jpg"));
-        thumbnail = getResizedBitmap(thumbnail, 400);
-        imgBtnHinhAnh.setImageBitmap(thumbnail);
-        BitMapToString(thumbnail);
+//        Bitmap thumbnail = (BitmapFactory.decodeFile("/storage/emulated/0/Pictures/1572793569605.jpg"));
+//        thumbnail = getResizedBitmap(thumbnail, 400);
+//        imgBtnHinhAnh.setImageBitmap(thumbnail);
+//        BitMapToString(thumbnail);
 
 
         // HANDLE UPLOAD IMAGE
@@ -206,7 +206,7 @@ public class Food_Item_Update_Admin extends Fragment {
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Giá không phù hợp", Toast.LENGTH_SHORT).show();
                 }
-                List<Integer> categoriesIDs = new ArrayList<Integer>();
+//                List<Integer> categoriesIDs = new ArrayList<Integer>();
                 Food food = new Food(name, description, price, unit, uriImage, categoriesId);
                 foodHelper.addFood(food);
 
@@ -226,7 +226,10 @@ public class Food_Item_Update_Admin extends Fragment {
         btnBackToList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                transaction = manager.beginTransaction();
+                Food_Home_Admin food_home_admin = new Food_Home_Admin();
+                transaction.replace(R.id.nav_host_fragment, food_home_admin);
+                transaction.commit();
             }
         });
 
@@ -255,10 +258,10 @@ public class Food_Item_Update_Admin extends Fragment {
 //                Log.d("myapp", picturePath + "");
 //                edtDescription.setText(picturePath);
             c.close();
-//                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-            Bitmap thumbnail = (BitmapFactory.decodeFile("/storage/emulated/0/Pictures/1572793569605.jpg"));
+            Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+//            Bitmap thumbnail = (BitmapFactory.decodeFile("/storage/emulated/0/Pictures/1572793569605.jpg"));
             thumbnail = getResizedBitmap(thumbnail, 400);
-            Log.w("path of image from gallery......******************.........", picturePath + "");
+//            Log.w("path of image from gallery......******************.........", picturePath + "");
             imgBtnHinhAnh.setImageBitmap(thumbnail);
             BitMapToString(thumbnail);
 
