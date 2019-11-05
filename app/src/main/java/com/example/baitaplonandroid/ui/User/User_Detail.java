@@ -78,6 +78,8 @@ public class User_Detail extends Fragment {
                     editor.putString("role", userAfterChecked.getRole());
                     HomeFragment homeFragment = new HomeFragment();
                     transaction.replace(R.id.nav_host_fragment, homeFragment);
+
+                    transaction.addToBackStack(null);
                     transaction.commit();
                 }
                 else {
@@ -93,6 +95,8 @@ public class User_Detail extends Fragment {
             public void onClick(View view) {
                 HomeFragment homeFragment = new HomeFragment();
                 transaction.replace(R.id.nav_host_fragment, homeFragment);
+
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -110,6 +114,7 @@ public class User_Detail extends Fragment {
 
                 HomeFragment homeFragment = new HomeFragment();
                 transaction.replace(R.id.nav_host_fragment, homeFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });

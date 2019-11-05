@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.baitaplonandroid.ui.Models.Bill;
 import com.example.baitaplonandroid.ui.Models.Category;
 
 import java.text.SimpleDateFormat;
@@ -26,6 +27,7 @@ public class CategoryHelper extends SQLiteOpenHelper {
     private static final String ID = "id";
     private static final String NAME = "name";
     private static final String DESCRIPTION = "description";
+    private static final String IMAGEURL = "imageurl";
     private static final String CREATEAT = "create_at";
     private static final String UPDATEAT = "update_at";
     private static final String ISDELETE = "is_delete";
@@ -44,6 +46,7 @@ public class CategoryHelper extends SQLiteOpenHelper {
                 ID + " INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 NAME + " TEXT," +
                 DESCRIPTION + " TEXT," +
+                IMAGEURL + " TEXT," +
                 CREATEAT + " DATETIME DEFAULT CURRENT_TIMESTAMP , " +
                 UPDATEAT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                 ISDELETE + " INTEGER DEFAULT 0 " +
@@ -53,6 +56,10 @@ public class CategoryHelper extends SQLiteOpenHelper {
         userHelper.onCreate(sqLiteDatabase);
         FoodHelper foodHelper = new FoodHelper(this.context);
         foodHelper.onCreate(sqLiteDatabase);
+        BillHelper billHelper = new BillHelper(this.context);
+        billHelper.onCreate(sqLiteDatabase);
+        BillFoodHelper billFoodHelper = new BillFoodHelper(this.context);
+        billFoodHelper.onCreate(sqLiteDatabase);
         Toast.makeText(context, "Create successfully", Toast.LENGTH_SHORT).show();
 
     }
@@ -93,6 +100,8 @@ public class CategoryHelper extends SQLiteOpenHelper {
 //        values.put(ID, category.getId());
         values.put(NAME, category.getName());
         values.put(DESCRIPTION, category.getDescription());
+
+        values.put(IMAGEURL, category.getImageurl());
 //        values.put(CREATEAT , getDateTime());
 //        values.put(UPDATEAT, getDateTime());
         values.put(ISDELETE, 0);
@@ -103,12 +112,12 @@ public class CategoryHelper extends SQLiteOpenHelper {
 
     public Category getCategoryById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, new String[]{ID, NAME, DESCRIPTION, CREATEAT, UPDATEAT, ISDELETE}, ID + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, new String[]{ID, NAME, DESCRIPTION, IMAGEURL, CREATEAT, UPDATEAT, ISDELETE}, ID + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null) {
             cursor.moveToNext();
         }
 
-        Category category = new Category(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), (cursor.getString(5) == "1") ? true : false);
+        Category category = new Category(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), (cursor.getString(6) == "1") ? true : false);
         cursor.close();
         db.close();
         return category;
@@ -119,25 +128,29 @@ public class CategoryHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(NAME, category.getName());
         values.put(DESCRIPTION, category.getDescription());
+        values.put(IMAGEURL, category.getImageurl());
         values.put(UPDATEAT, getDateTime());
         return db.update(TABLE_NAME, values, ID + "=?", new String[]{String.valueOf(category.getId())});
     }
 
     public List<Category> getAllCategory() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+//        String query = "SELECT * FROM " + TABLE_NAME + " WHERE is_delete = 0";
+//        String query = "SELECT * FROM " + TABLE_NAME;
+        String query = "SELECT * FROM category";
         List<Category> categories = new ArrayList<Category>();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                if (cursor.getInt(5) == 0) {
+                if (cursor.getInt(6) == 0) {
                     Category category = new Category();
                     category.setId(cursor.getInt(0));
                     category.setName(cursor.getString(1));
                     category.setDescription(cursor.getString(2));
-                    category.setCreateAt(cursor.getString(3));
-                    category.setUpdateAt(cursor.getString(4));
-                    category.setIsDelete(cursor.getString(5) == "0" ? false : true);
+                    category.setImageurl(cursor.getString(3));
+                    category.setCreateAt(cursor.getString(4));
+                    category.setUpdateAt(cursor.getString(5));
+                    category.setIsDelete(cursor.getString(6) == "0" ? false : true);
                     categories.add(category);
                 }
             } while (cursor.moveToNext());

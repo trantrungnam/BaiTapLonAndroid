@@ -101,6 +101,8 @@ public class Admin_Edit_User extends Fragment {
                 if (result == 1)
                     Toast.makeText(getContext(), "Cập nhật thành công.", Toast.LENGTH_SHORT).show();
                 transaction.replace(R.id.nav_host_fragment, adminListUser);
+
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -112,6 +114,8 @@ public class Admin_Edit_User extends Fragment {
             public void onClick(View view) {
                 Admin_List_User adminListUser = new Admin_List_User();
                 transaction.replace(R.id.nav_host_fragment, adminListUser);
+
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });

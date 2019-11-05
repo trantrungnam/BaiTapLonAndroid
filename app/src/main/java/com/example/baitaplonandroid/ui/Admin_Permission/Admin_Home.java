@@ -60,6 +60,8 @@ public class Admin_Home extends Fragment {
                     transaction = manager.beginTransaction();
                     Admin_List_User admin_list_user = new Admin_List_User();
                     transaction.replace(R.id.nav_host_fragment, admin_list_user);
+
+                    transaction.addToBackStack(null);
                     transaction.commit();
 
                 }
@@ -73,6 +75,7 @@ public class Admin_Home extends Fragment {
                     transaction = manager.beginTransaction();
                     Food_Home_Admin food_home_admin = new Food_Home_Admin();
                     transaction.replace(R.id.nav_host_fragment, food_home_admin);
+                    transaction.addToBackStack(null);
                     transaction.commit();
                 }
             });
@@ -85,6 +88,7 @@ public class Admin_Home extends Fragment {
                     transaction = manager.beginTransaction();
                     CategoryFragment categoryFragment  = new CategoryFragment();
                     transaction.replace(R.id.nav_host_fragment, categoryFragment);
+                    transaction.addToBackStack(null);
                     transaction.commit();
                 }
             });
@@ -101,6 +105,7 @@ public class Admin_Home extends Fragment {
             User_Login user_login = new User_Login();
             transaction = manager.beginTransaction();
             transaction.replace(R.id.nav_host_fragment, user_login);
+            transaction.addToBackStack(null);
             transaction.commit();
         }
 

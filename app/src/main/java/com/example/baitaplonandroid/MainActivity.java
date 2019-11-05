@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
-        TextView txtUserName = findViewById(R.id.edtHeaderUserName);
+
         View headerView = navigationView.getHeaderView(0);
 
         // CONFIG FRAGMENT
@@ -64,6 +64,18 @@ public class MainActivity extends AppCompatActivity {
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
 
+        // TEXT USER NAME
+        TextView txtUserName = headerView.findViewById(R.id.edtHeaderUserName);
+        SharedPreferences sharedPreferences = getSharedPreferences("restaurant", 0);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String username = sharedPreferences.getString("username", "").equals("") ? "Login Here" : sharedPreferences.getString("username", "");
+        txtUserName.setText(username);
+
+        // TEXT EMAIL
+        TextView textViewEmail = headerView.findViewById(R.id.textViewEmail);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String email = sharedPreferences.getString("username", "").equals("") ? "email@gmail.com" : sharedPreferences.getString("username", "") + "@gmail.com";
+        textViewEmail.setText(email);
 
         // HANDLE IMAGE HEADER //
         imageView = headerView.findViewById(R.id.buttonView);
@@ -84,12 +96,14 @@ public class MainActivity extends AppCompatActivity {
                     User_Login user_login = new User_Login();
                     Toast.makeText(MainActivity.this, "Show", Toast.LENGTH_SHORT).show();
                     transaction.replace(R.id.nav_host_fragment, user_login);
+                    transaction.addToBackStack(null);
                 } else {
                     transaction = manager.beginTransaction();
                     sharedPreferences.getString("username", "");
                     sharedPreferences.getInt("id", -1);
                     User_Detail userDetail = new User_Detail();
                     transaction.replace(R.id.nav_host_fragment, userDetail);
+                    transaction.addToBackStack(null);
                     Toast.makeText(MainActivity.this, "Connected Success", Toast.LENGTH_SHORT).show();
                 }
                 transaction.commit();
@@ -103,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_food, R.id.nav_share, R.id.nav_send, R.id.nav_category, R.id.nav_management)
+                R.id.nav_home, R.id.nav_food , R.id.nav_bill, R.id.nav_share, R.id.nav_send, R.id.nav_management)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this,

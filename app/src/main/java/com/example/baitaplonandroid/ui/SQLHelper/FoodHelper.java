@@ -120,6 +120,58 @@ public class FoodHelper extends SQLiteOpenHelper {
         return food;
     }
 
+    public List<Food> getFoodByCategoryID(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE category LIKE '%" + id+"%'";
+        List<Food> foods = new ArrayList<Food>();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getInt(6) == 0) {
+                    Food food = new Food();
+                    food.setId(cursor.getInt(0));
+                    food.setName(cursor.getString(1));
+                    food.setDescription(cursor.getString(2));
+                    food.setPrice(Double.parseDouble(cursor.getString(3)));
+                    food.setUnit(cursor.getString(4));
+                    food.setPicture(cursor.getString(5));
+
+                    //Convert CategoriesID
+                    String categoriesWithString = cursor.getString(6);
+                    String[] categoryIds = categoriesWithString.split(",");
+                    List<Integer> categoryWithInt = new ArrayList<Integer>() {
+                    };
+                    try {
+
+                        for (String category : categoryIds
+                        ) {
+                            if (category.startsWith("[")) {
+                                category = category.replace('[', ' ');
+                            }
+                            if (category.endsWith("]")) {
+                                category = category.replace(']', ' ');
+                            }
+
+                            categoryWithInt.add(Integer.parseInt(category.trim()));
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(context, "Category no choose", Toast.LENGTH_SHORT).show();
+                    }
+
+                    food.setCategories(categoryWithInt);
+                    food.setCreateAt(cursor.getString(7));
+                    food.setUpdateAt(cursor.getString(8));
+                    food.setIsDelete(cursor.getString(9) == "0" ? false : true);
+                    foods.add(food);
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return foods;
+    }
+
     public int Update(Food food) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -162,13 +214,11 @@ public class FoodHelper extends SQLiteOpenHelper {
 
                         for (String category : categoryIds
                         ) {
-                            if (category.startsWith("["))
-                            {
-                                category = category.replace('[',' ');
+                            if (category.startsWith("[")) {
+                                category = category.replace('[', ' ');
                             }
-                            if (category.endsWith("]"))
-                            {
-                                category = category.replace(']',' ');
+                            if (category.endsWith("]")) {
+                                category = category.replace(']', ' ');
                             }
 
                             categoryWithInt.add(Integer.parseInt(category.trim()));

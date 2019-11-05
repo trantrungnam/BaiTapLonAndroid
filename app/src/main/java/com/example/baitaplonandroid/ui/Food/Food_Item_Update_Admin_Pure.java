@@ -237,6 +237,7 @@ public class Food_Item_Update_Admin_Pure extends Fragment {
                 Food_Home_Admin food_home_admin = new Food_Home_Admin();
                 Toast.makeText(getContext(), "Done", Toast.LENGTH_SHORT).show();
                 transaction.replace(R.id.nav_host_fragment, food_home_admin);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });

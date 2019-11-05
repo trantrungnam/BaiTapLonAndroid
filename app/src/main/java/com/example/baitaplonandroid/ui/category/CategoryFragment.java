@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.baitaplonandroid.R;
 import com.example.baitaplonandroid.ui.Models.Category;
+import com.example.baitaplonandroid.ui.SQLHelper.CategoryHelper;
 import com.example.baitaplonandroid.ui.home.HomeViewModel;
 import com.example.baitaplonandroid.ui.listview.CustomAdapter;
 
@@ -37,38 +38,28 @@ public class CategoryFragment extends Fragment {
     private ListView listView;
     private List<Category> categoriesInstance;
     private Button btnAddCategory;
+    private CategoryHelper categoryHelper;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_category, container, false);
-
-        //Config model view
-        CategoryViewModel viewModel = ViewModelProviders.of(getActivity()).get(CategoryViewModel.class);
-        viewModel.getCategories(getContext()).observe(this, new Observer<List<Category>>() {
-            @Override
-            public void onChanged(List<Category> categories) {
-                categoriesInstance = categories;
-                CategoryCustomAdapter categoryCustomAdapter = new CategoryCustomAdapter(getContext(), categoriesInstance);
-                listView.setAdapter(categoryCustomAdapter);
-            }
-        });
+        categoryHelper = new CategoryHelper(getContext());
+        //
+        listView = root.findViewById(R.id.list_category);
+        categoriesInstance = categoryHelper.getAllCategory();
+        final CategoryCustomAdapter categoryCustomAdapter = new CategoryCustomAdapter(getContext(), categoriesInstance);
+        listView.setAdapter(categoryCustomAdapter);
 
         //TEXT VIEW
         final TextView textView = root.findViewById(R.id.text_category);
-        categoryViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+                textView.setText("Danh mục");
 
         // SETTING FOR FRAGMENT TRANSACTION
         final FragmentManager manager = getFragmentManager();
         final FragmentTransaction transaction = manager.beginTransaction();
 
         //LIST VIEW
-        listView = (ListView) root.findViewById(R.id.list_category);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -79,10 +70,14 @@ public class CategoryFragment extends Fragment {
                 bundle.putInt("id", item.getId());
                 bundle.putString("name", item.getName());
                 bundle.putString("description", item.getDescription());
+                bundle.putString("imageurl", item.getImageurl());
                 //CREATE FRAGMENT INSTANCE AND SHOW IT.
-                CategoryDetailFragment categoryDetailFragment = new CategoryDetailFragment();
-                categoryDetailFragment.setArguments(bundle);
-                transaction.replace(R.id.nav_host_fragment, categoryDetailFragment).addToBackStack(null);
+//                CategoryDetailFragment categoryDetailFragment = new CategoryDetailFragment();
+//                categoryDetailFragment.setArguments(bundle);
+                CategoryUpdateFragment categoryUpdateFragment = new CategoryUpdateFragment();
+                categoryUpdateFragment.setArguments(bundle);
+                transaction.replace(R.id.nav_host_fragment, categoryUpdateFragment).addToBackStack(null);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -94,10 +89,12 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString("message", "hello qua r ne");
+//                bundle.putString("message", "hello qua r ne");
                 AddCategoryFragment addCategoryFragment = new AddCategoryFragment();
                 addCategoryFragment.setArguments(bundle);
-                transaction.replace(R.id.nav_host_fragment, addCategoryFragment).addToBackStack(null);
+                transaction.replace(R.id.nav_host_fragment, addCategoryFragment);
+
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });

@@ -70,6 +70,7 @@ public class Admin_List_User extends Fragment {
                 bundle.putString("role", user.getRole());
                 edit_user.setArguments(bundle);
                 transaction.replace(R.id.nav_host_fragment, edit_user);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });

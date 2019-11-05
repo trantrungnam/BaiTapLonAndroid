@@ -4,31 +4,35 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
-public class Category extends BaseModel{
+public class Category extends BaseModel {
     private int id;
     private String name;
     private String description;
+    private String imageurl;
 
-    public Category(int id, String name, String description, String createAt, String updateAt, boolean isDeleted) {
+    public Category(int id, String name, String description, String imageurl, String createAt, String updateAt, boolean isDeleted) {
         super(createAt, updateAt, isDeleted);
         this.id = id;
         this.name = name;
         this.description = description;
+        this.imageurl = imageurl;
     }
 
-    public Category(int id, String name, String description) {
+    public Category(int id, String name, String description, String imageurl) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.imageurl = imageurl;
     }
 
     public Category(int id) {
         this.id = id;
     }
 
-    public Category(String name, String description) {
+    public Category(String name, String description, String imageurl) {
         this.name = name;
         this.description = description;
+        this.imageurl = imageurl;
     }
 
     public Category() {
@@ -52,6 +56,14 @@ public class Category extends BaseModel{
 
     public String getDescription() {
         return description;
+    }
+
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
     }
 
     public void setDescription(String description) {

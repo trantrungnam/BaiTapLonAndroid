@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:weightSum="12"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtDonMuaHang"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="Hóa Đơn Mua Hàng"
+            android:textColor="#FF4500"
+            android:textSize="30dp"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tên món ăn:"
+            android:textSize="20dp"></TextView>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Giá:"
+            android:textSize="20dp"></TextView>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Số lương:"
+            android:textSize="20dp"></TextView>
+
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listViewCategories"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:focusable="false"
+        android:nestedScrollingEnabled="true"
+        android:layout_weight="8" />
+
+    <Button
+        android:layout_weight="1"
+        android:id="@+id/btnThemMon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm món ăn"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="70dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Tổng Thành Tiền:"
+            android:textSize="20dp"></TextView>
+
+        <TextView
+            android:id="@+id/txtTongTieng"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Tổng Thành Tiền:"
+            android:textColor="@color/colorAccent"
+            android:textSize="26dp"></TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="70dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thanh toán"
+                android:textSize="26dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:layout_weight="1"
+        android:id="@+id/btnTao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tạo"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        />
+
+
+
+</LinearLayout>

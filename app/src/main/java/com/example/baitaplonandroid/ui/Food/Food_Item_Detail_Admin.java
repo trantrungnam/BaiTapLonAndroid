@@ -102,6 +102,7 @@ public class Food_Item_Detail_Admin extends Fragment {
                 Food_Home food_home = new Food_Home();
                 transaction = manager.beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, food_home);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -115,6 +116,7 @@ public class Food_Item_Detail_Admin extends Fragment {
                 foodHelper.deleteFoodById(id);
                 transaction = manager.beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, food_home_admin);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -136,6 +138,7 @@ public class Food_Item_Detail_Admin extends Fragment {
                 update_admin_pure.setArguments(bundle);
                 transaction = manager.beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, update_admin_pure);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });

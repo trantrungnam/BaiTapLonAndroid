@@ -15,31 +15,13 @@
         android:id="@+id/nav_food"
         android:name="com.example.baitaplonandroid.ui.Food.Food_Home"
         android:label="@string/menu_food"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_food__home" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.baitaplonandroid.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.example.baitaplonandroid.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
-
-    <fragment
-        android:id="@+id/nav_category"
-        android:name="com.example.baitaplonandroid.ui.category.CategoryFragment"
-        android:label="Category"
-        tools:layout="@layout/fragment_category" />
-
-    <fragment
-        android:id="@+id/nav_login"
-        android:name="com.example.baitaplonandroid.ui.User.User_Login"
-        android:label="@string/menu_login"
-        tools:layout="@layout/fragment_send" />
+        android:id="@+id/nav_bill"
+        android:name="com.example.baitaplonandroid.ui.gallery.Bill_Home_Fragment"
+        android:label="@string/menu_food"
+        tools:layout="@layout/fragment_bill_home" />
 
     <fragment
         android:id="@+id/nav_management"

@@ -47,6 +47,7 @@ public class CategoryDetailFragment extends Fragment {
         Toast.makeText(getContext(), idCategory + "", Toast.LENGTH_SHORT).show();
         final String name = getArguments().getString("name");
         final String description = getArguments().getString("description");
+        final String imageurl = getArguments().getString("imageurl");
 
         //INITIAL CATEGORY HELPER DATABASE.
         categoryHelper = new CategoryHelper(getContext());
@@ -72,6 +73,7 @@ public class CategoryDetailFragment extends Fragment {
 
                 //ADD CATEGORY FRAGMENT UI.
                 transaction.replace(R.id.nav_host_fragment, categoryFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -87,6 +89,7 @@ public class CategoryDetailFragment extends Fragment {
 
                 //ADD CATEGORY FRAGMENT UI.
                 transaction.replace(R.id.nav_host_fragment, categoryFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -101,9 +104,11 @@ public class CategoryDetailFragment extends Fragment {
                 bundle.putInt("id", idCategory);
                 bundle.putString("name", category.getName());
                 bundle.putString("description", category.getDescription());
+                bundle.putString("imageurl", category.getImageurl());
                 CategoryUpdateFragment categoryUpdateFragment = new CategoryUpdateFragment();
                 categoryUpdateFragment.setArguments(bundle);
                 transaction.replace(R.id.nav_host_fragment, categoryUpdateFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });

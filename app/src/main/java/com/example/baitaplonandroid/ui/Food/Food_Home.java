@@ -1,6 +1,7 @@
 package com.example.baitaplonandroid.ui.Food;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,10 +17,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.baitaplonandroid.R;
+import com.example.baitaplonandroid.ui.Models.Bill;
+import com.example.baitaplonandroid.ui.Models.Bill_Food;
+import com.example.baitaplonandroid.ui.Models.Bill_Food_List_Type;
 import com.example.baitaplonandroid.ui.Models.Category;
 import com.example.baitaplonandroid.ui.Models.Food;
 import com.example.baitaplonandroid.ui.SQLHelper.FoodHelper;
 import com.example.baitaplonandroid.ui.SQLHelper.UserHelper;
+import com.google.gson.Gson;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -39,6 +44,7 @@ public class Food_Home extends Fragment {
     public Food_Home() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -66,6 +72,7 @@ public class Food_Home extends Fragment {
         Food_Item_For_ListView item = new Food_Item_For_ListView(getContext(), foods);
 
         //LISTVIEW WITH FOODS
+
         food_list_view = view.findViewById(R.id.food_list_view);
         food_list_view.setAdapter(item);
         food_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,6 +95,7 @@ public class Food_Home extends Fragment {
                 bundle.putIntArray("category", categoryIds);
                 foodDetail.setArguments(bundle);
                 transaction.replace(R.id.nav_host_fragment, foodDetail);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });

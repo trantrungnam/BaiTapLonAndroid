@@ -75,6 +75,7 @@ public class User_Login extends Fragment {
                     bundle.putString("username" , taikhoan);
                     bundle.putString("role", user.getRole());
                     transaction.replace(R.id.nav_host_fragment, homeFragment);
+                    transaction.addToBackStack(null);
                     transaction.commit();
                     Toast.makeText(getContext(), "Đăng nhập thành công" + taikhoan, Toast.LENGTH_SHORT).show();
                 } else {
@@ -112,6 +113,7 @@ public class User_Login extends Fragment {
 
                         HomeFragment homeFragment = new HomeFragment();
                         transaction.replace(R.id.nav_host_fragment, homeFragment);
+                        transaction.addToBackStack(null);
                         transaction.commit();
                         Toast.makeText(getContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                     } else

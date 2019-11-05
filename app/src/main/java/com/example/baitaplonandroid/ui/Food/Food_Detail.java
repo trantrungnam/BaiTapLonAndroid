@@ -1,10 +1,12 @@
 package com.example.baitaplonandroid.ui.Food;
 
 
+import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,12 +15,16 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.baitaplonandroid.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
 
@@ -33,6 +39,7 @@ public class Food_Detail extends Fragment {
     private Button btnBack;
     private FragmentManager manager;
     private FragmentTransaction transaction;
+    private FloatingActionButton btncart;
 
 
     public Food_Detail() {
@@ -46,9 +53,9 @@ public class Food_Detail extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_food__detail, container, false);
 
-        int id = getArguments().getInt("id", -1);
+        final int id = getArguments().getInt("id", -1);
         String nameValue = getArguments().getString("name", "");
-        String descriptionValue= getArguments().getString("description", "");
+        String descriptionValue = getArguments().getString("description", "");
         String unitValue = getArguments().getString("unit", "");
         String imageValue = getArguments().getString("image", "");
         String priceValue = getArguments().getString("price", "");
@@ -58,12 +65,13 @@ public class Food_Detail extends Fragment {
 
         // IMAGE VIEW
         img_food = view.findViewById(R.id.img_food);
-        img_food = view.findViewById(R.id.img_food);Bitmap thumbnail = (BitmapFactory.decodeFile(imageValue));
+        img_food = view.findViewById(R.id.img_food);
+        Bitmap thumbnail = (BitmapFactory.decodeFile(imageValue));
         thumbnail = getResizedBitmap(thumbnail, 400);
         img_food.setImageBitmap(thumbnail);
 
 
-        toolbar =  view.findViewById(R.id.toolbar);
+        toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle(nameValue);
 
         //TEXT VIEW
@@ -87,9 +95,33 @@ public class Food_Detail extends Fragment {
                 Food_Home food_home = new Food_Home();
                 transaction = manager.beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, food_home);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
+
+
+        btncart = view.findViewById(R.id.btncart);
+        btncart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+                Bundle bundle = new Bundle();
+
+                bundle.putInt("id", id);
+                bundle.putString("name", food_name.getText().toString());
+                bundle.putString("price", food_price.getText().toString());
+                DialogFragment dialogFragment = new Custom_Dialog(view);
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(ft, "dialog");
+            }
+        });
+
 
         return view;
     }
@@ -109,4 +141,15 @@ public class Food_Detail extends Fragment {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
+    public void GetValueFromDialog(String value) {
+        Toast.makeText(getContext(), value, Toast.LENGTH_SHORT).show();
+    }
 }
+
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        // Make sure fragment codes match up
+//        if (requestCode == DialogFragment.REQUEST_CODE) {
+//            String editTextString = data.getStringExtra(
+//                    DialogFragment.EDIT_TEXT_BUNDLE_KEY);
+//
+//}
