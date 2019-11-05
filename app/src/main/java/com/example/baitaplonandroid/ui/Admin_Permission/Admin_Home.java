@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.baitaplonandroid.R;
+import com.example.baitaplonandroid.ui.Bill.Bill_Home_Admin;
 import com.example.baitaplonandroid.ui.Food.Food_Home_Admin;
 import com.example.baitaplonandroid.ui.User.Admin_List_User;
 import com.example.baitaplonandroid.ui.User.User_Login;
@@ -98,7 +99,11 @@ public class Admin_Home extends Fragment {
             btnOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    transaction = manager.beginTransaction();
+                    Bill_Home_Admin bill_home_admin  = new Bill_Home_Admin();
+                    transaction.replace(R.id.nav_host_fragment, bill_home_admin);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
             });
         } else {

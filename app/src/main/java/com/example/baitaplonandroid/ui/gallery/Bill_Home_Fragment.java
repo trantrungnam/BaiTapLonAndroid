@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,7 +18,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.baitaplonandroid.R;
-import com.example.baitaplonandroid.ui.Food.Custom_Dialog;
 import com.example.baitaplonandroid.ui.Food.Food_Home;
 import com.example.baitaplonandroid.ui.Models.Bill;
 import com.example.baitaplonandroid.ui.Models.Bill_Food;
@@ -28,7 +26,6 @@ import com.example.baitaplonandroid.ui.SQLHelper.BillFoodHelper;
 import com.example.baitaplonandroid.ui.SQLHelper.BillHelper;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bill_Home_Fragment extends Fragment {
@@ -113,7 +110,7 @@ public class Bill_Home_Fragment extends Fragment {
             }
         });
 
-        btnTao  = view.findViewById(R.id.btnTao);
+        btnTao  = view.findViewById(R.id.btnThanhToan);
 
         btnTao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +121,7 @@ public class Bill_Home_Fragment extends Fragment {
                 Gson gson = new Gson();
                 if(!bill_order.equals("")) {
                     Bill item = new Bill();
+                    item.setTongTien(Double.parseDouble(txtTongTieng.getText().toString()));
                     Bill result = billHelper.addBill(item);
                     if(result != null) {
                         Bill_Food_List_Type bill_food_list_type = gson.fromJson(bill_order, Bill_Food_List_Type.class);
@@ -134,7 +132,15 @@ public class Bill_Home_Fragment extends Fragment {
                         }
                     }
                     editor.putString("bill_order_list", "");
+                    editor.commit();
                     Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+
+                    Bill_Home_Fragment bill_home_fragment = new Bill_Home_Fragment();
+
+                    manager = getFragmentManager();
+                    transaction = manager.beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, bill_home_fragment);
+                    transaction.commit();
                 }
             }
         });

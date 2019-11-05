@@ -93,15 +93,16 @@ public class BillFoodHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                if (cursor.getInt(6) == 0) {
+                if (cursor.getInt(7) == 0) {
                     Bill_Food bill_food = new Bill_Food();
                     bill_food.setId(cursor.getInt(0));
                     bill_food.setName(cursor.getString(1));
                     bill_food.setQuantity(Integer.parseInt(cursor.getString(2)));
                     bill_food.setPrice(Double.parseDouble(cursor.getString(3)));
-                    bill_food.setCreateAt(cursor.getString(4));
-                    bill_food.setUpdateAt(cursor.getString(5));
-                    bill_food.setIsDelete(cursor.getString(6) == "0" ? false : true);
+                    bill_food.setBillId(Integer.parseInt(cursor.getString(4)));
+                    bill_food.setCreateAt(cursor.getString(5));
+                    bill_food.setUpdateAt(cursor.getString(6));
+                    bill_food.setIsDelete(cursor.getString(7) == "0" ? false : true);
                     bill_foods.add(bill_food);
                 }
             } while (cursor.moveToNext());

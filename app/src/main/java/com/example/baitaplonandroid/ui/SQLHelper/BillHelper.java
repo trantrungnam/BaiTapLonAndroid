@@ -22,6 +22,8 @@ public class BillHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "restaurant";
     private static final String TABLE_NAME = "bill";
     private static final String ID = "id";
+    private static final String TONGTIEN = "tongtien";
+    private static final String THANHTOAN = "isPaied";
     private static final String CREATEAT = "create_at";
     private static final String UPDATEAT = "update_at";
     private static final String ISDELETE = "is_delete";
@@ -38,6 +40,8 @@ public class BillHelper extends SQLiteOpenHelper {
         Log.d("myapp", "Go on create");
         String sqlQuery = " CREATE TABLE " + TABLE_NAME + " ( " +
                 ID + " INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                TONGTIEN + " DOUBLE  DEFAULT 0 ," +
+                THANHTOAN + " INTEGER  DEFAULT 0 ," +
                 CREATEAT + " DATETIME DEFAULT CURRENT_TIMESTAMP , " +
                 UPDATEAT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                 ISDELETE + " INTEGER DEFAULT 0 " +
@@ -67,6 +71,8 @@ public class BillHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String date = getDateTime();
         ContentValues values = new ContentValues();
+        values.put(TONGTIEN, bill.getTongTien());
+//        values.put(THANHTOAN, bill.getIsPayed());
         values.put(CREATEAT, date);
         values.put(UPDATEAT, date);
         values.put(ISDELETE, 0);
@@ -82,12 +88,36 @@ public class BillHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE create_at = '" + datetime + "'";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            if (cursor.getInt(3) == 0) {
+            if (cursor.getInt(5) == 0) {
                 Bill bill = new Bill();
                 bill.setId(cursor.getInt(0));
-                bill.setCreateAt(cursor.getString(1));
-                bill.setUpdateAt(cursor.getString(2));
-                bill.setIsDelete(cursor.getString(3) == "0" ? false : true);
+                bill.setTongTien(cursor.getDouble(1));
+                bill.setIsPayed(cursor.getInt(2));
+                bill.setCreateAt(cursor.getString(3));
+                bill.setUpdateAt(cursor.getString(4));
+                bill.setIsDelete(cursor.getString(5) == "0" ? false : true);
+                return bill;
+            }
+        }
+
+        cursor.close();
+        db.close();
+        return null;
+    }
+
+    public Bill getBillById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE id = " + id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            if (cursor.getInt(5) == 0) {
+                Bill bill = new Bill();
+                bill.setId(cursor.getInt(0));
+                bill.setTongTien(cursor.getDouble(1));
+                bill.setIsPayed(cursor.getInt(2));
+                bill.setCreateAt(cursor.getString(3));
+                bill.setUpdateAt(cursor.getString(4));
+                bill.setIsDelete(cursor.getString(5) == "0" ? false : true);
                 return bill;
             }
         }
@@ -104,12 +134,14 @@ public class BillHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                if (cursor.getInt(3) == 0) {
+                if (cursor.getInt(5) == 0) {
                     Bill bill = new Bill();
                     bill.setId(cursor.getInt(0));
-                    bill.setCreateAt(cursor.getString(1));
-                    bill.setUpdateAt(cursor.getString(2));
-                    bill.setIsDelete(cursor.getString(3) == "0" ? false : true);
+                    bill.setTongTien(cursor.getDouble(1));
+                    bill.setIsPayed(cursor.getInt(2));
+                    bill.setCreateAt(cursor.getString(3));
+                    bill.setUpdateAt(cursor.getString(4));
+                    bill.setIsDelete(cursor.getString(5) == "0" ? false : true);
                     bills.add(bill);
                 }
             } while (cursor.moveToNext());
@@ -118,6 +150,15 @@ public class BillHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return bills;
+    }
+
+    public int updatePayment(int id) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(THANHTOAN, "1");
+        Toast.makeText(context, id + "", Toast.LENGTH_SHORT).show();
+        return db.update(TABLE_NAME, values, ID + " = ?", new String[]{String.valueOf(id)});
     }
 
     public int deleteBillById(int id) {
